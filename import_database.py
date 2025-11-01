@@ -19,7 +19,22 @@ def import_database(backup_file):
         return False
     
     try:
-        # Connect to database
+        # Connect to MySQL server without database first
+        db_name = DB_CONFIG.get('database', 'cricbuzz_livestats')
+        server_config = DB_CONFIG.copy()
+        server_config.pop('database', None)  # Remove database from connection config
+        
+        connection = mysql.connector.connect(**server_config)
+        cursor = connection.cursor()
+        
+        # Create database if it doesn't exist
+        cursor.execute(f"CREATE DATABASE IF NOT EXISTS `{db_name}`")
+        print(f"Database '{db_name}' ensured to exist")
+        
+        # Now connect to the specific database
+        cursor.close()
+        connection.close()
+        
         connection = mysql.connector.connect(**DB_CONFIG)
         cursor = connection.cursor()
         

@@ -49,6 +49,8 @@ Import the database backup to populate all required data for SQL Analytics:
 python import_database.py cricket_database_backup_20251028_231158.sql
 ```
 
+**Note:** The import script will automatically create the database if it doesn't exist (using the database name from `config.py`).
+
 This ensures the SQL Analytics page runs smoothly with all necessary data.
 
 ### 4. Start the Application
